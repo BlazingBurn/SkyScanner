@@ -36,3 +36,62 @@
     transform: rotate(360deg);
   }
 }
+
+.colorMenu {
+  background-color: rgb(234, 234, 234);
+}
+
+.imageMenuButton {
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+}
+
+.nav-item {
+  margin-right: 10px;
+}
+
+.buttonClasicMenu {
+  background-color: rgb(224, 224, 224);
+  border: rgb(187, 187, 187) solid 2px;
+  border-radius: 5%;
+  color: rgb(135, 7, 135);
+}
+
+.activeButtonMenu {
+  background-color: white;
+  border: rgb(164, 164, 164) solid 2px;
+  border-radius: 5%;
+  color: rgb(135, 7, 135);
+}
+
+.backgroundHeaderAiport {
+  background-image: url("./images/sun.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
+.titleHeader {
+  color: white;
+  font-size: 70px;
+  padding: 5px;
+}
+
+.subTitleHeader {
+  color: white;
+  font-size: 25px;
+  padding: 10px;
+}
+
+.HeaderChoice {
+  background-color: white;
+  border-radius: 2%;
+  width: fit-content;
+  margin: auto;
+}
+
+/* .searchirportBackGround {
+  background-image: url("./images/airport.jpg");
+  background-size: contain;
+  height: max-content;
+} */
