@@ -28,8 +28,8 @@ const AirportItem: React.FC<AirportProps> = ({airport}) =>{
                 }
                 </CardTop>
                 <CardBottomSecond>
-                    <p>Code pour recherches de vols : <br /><b>{airport.CityId}</b></p>
-                    <p>Nom de l'emplacement : <br /><b>{airport.PlaceName}</b></p>
+                    <p>Code pour recherches de vols : <br /><b>{airport.CityId.length > 0 ? airport.CityId : "Aucun code renseigné"}</b></p>
+                    <p>Nom de l'emplacement : <br /><b>{airport.PlaceName.length > 0 ? airport.PlaceName : "Aucun emplacement renseigné"}</b></p>
                 </CardBottomSecond>
             </CardWrapper>
         </div>

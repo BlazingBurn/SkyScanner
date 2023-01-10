@@ -1,5 +1,4 @@
 import { FlightDetailsInterface } from "../../interfaces/flightDetailsInterface";
-import { CardBottomSecond, CardTop, CardWrapper, Delivery, Setup } from "../styles";
 
 import star from "../../images/star.png";
 
@@ -9,10 +8,41 @@ interface FlightDetailsProps {
 
 const FlightItemDetails: React.FC<FlightDetailsProps> = ({flightDetails}) =>{
    
+    const addToFav = () => {
+        // let fav: any = JSON.parse(localStorage.getItem("fav"));
+        // fav[state.details.id] = this.state.details.legs;
+        // localStorage.setItem("fav", JSON.stringify(fav));
+    }
+
     return(
         <div className="p-3">
             
-            Origine du vol
+            <div>
+                <h2>
+                    Détails du vol
+                </h2>
+                <p className="addToFav"><button className="btn-details" onClick={addToFav}>Ajouter aux favoris</button></p>
+                <div>
+                    {flightDetails.pricingOptions.map((result: any) => (
+                        <div key={result.id} className="card">
+                           <p>Prix: {result.totalPrice} €</p>
+                            <p>Nom: {result.agents[0].name}</p>
+                            {result.agents[0].segments.map((segment: any) => (
+                                <div key={segment.id}>
+                                    <p>Numéro du vol: {segment.flightNumber}</p>
+                                    <p>De: {segment.origin.name} - {segment.origin.displayCode} - {segment.origin.city}</p>
+                                    <p>Départ le: {new Date(segment.departure).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</p>
+                                    <p>À: {segment.destination.name} - {segment.destination.displayCode} - {segment.destination.city}</p>
+                                    <p>Arrivé le: {new Date(segment.arrival).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</p>
+                                    <p>Durée du vol: {Math.floor(segment.duration / 60)} heures {Math.floor(segment.duration % 60)} minutes</p>
+                                </div>
+                            ))}
+                            <p>Note: {result.agents[0].rating.value.toFixed(1)}/5 ({result.agents[0].rating.count} votes)</p>
+                            <p>URL: <a href={result.agents[0].url} target="_blank" rel="noreferrer">lien</a></p>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
             {/* <CardWrapper className="m-auto">
                 <CardTop>

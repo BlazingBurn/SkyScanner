@@ -55,13 +55,11 @@ const SearchAirport: React.FC = () => {
     };
   
     return (
-        <div className='searchirportBackGround'>
+        <div className={airports.length > 0 ? "searchirportBackGround": ""}>
             <div className='HeaderChoice'>
                 <div className='p-3'>
-                    <h1 className='text-center'>Sélectionner votre Aéroport</h1>
-                    <ul>
+                    <h1 className='text-center'>Trouver votre Aéroport</h1>
                         <CityInput onCitySubmit={handleCitySubmit} />
-                    </ul>
                 </div>
 
                 <div className='p-3'>
@@ -69,12 +67,16 @@ const SearchAirport: React.FC = () => {
                     error && <p>{`${message}`}</p>
                     }
                     {
+                        airports.length === 0 && city &&
+                        <h2>Aucun Aéroport trouvé pour : <b>{city}</b> </h2>
+                    }
+                    {
                         airports.length > 0 &&
-                        <h2>Aéroport de {city} :</h2>
+                        <h2>Aéroport comportant <b>{city}</b> dans son nom :</h2>
                     }
                     { 
                         airports.length > 0 &&
-                        airports.map(e => <AirportItem key={e.CityId} airport={e}/>)
+                        airports.map(e => <AirportItem key={e.CityId + e.GeoId} airport={e}/>)
                     }
                 </div>
 

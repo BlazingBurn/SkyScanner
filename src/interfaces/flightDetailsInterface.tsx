@@ -29,6 +29,7 @@ interface PricingOptions {
 }
 
 interface Agents {
+    id: string;
     name: string;
     isCarrier: boolean;
     url: string;
@@ -36,11 +37,21 @@ interface Agents {
     rating: Rating;
     updateStatus: string;
     quoteAge: number;
+    segments: Segment[];
 }
 
 interface Rating {
     value: number;
     count: number;
+}
+
+interface Segment {
+    id: string;
+    origin: Origin;
+    destination: Destination;
+    duration: number;
+    departure: string;
+    arrival: string;
 }
 
 interface Linked {

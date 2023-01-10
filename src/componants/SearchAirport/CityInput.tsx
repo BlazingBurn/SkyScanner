@@ -17,7 +17,7 @@ const CityInput: React.FC<CityInputProps> = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='text-center' onSubmit={handleSubmit}>
       <label className='customLabelCityInput'>
         <input
           type="text"

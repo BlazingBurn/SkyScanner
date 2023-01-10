@@ -16,14 +16,15 @@ interface Price {
 }
 
 export interface Legs {
+    id: string;
     origin: Origin;
     destination: Destination;
     departure: string;
 }
 
 export interface LegsRename {
-    origin: Origin;
-    destination: Destination;
+    origin: string;
+    destination: string;
     date: string;
 }
 

@@ -18,6 +18,7 @@ const FlightsInput: React.FC<CityInputProps> = (props) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setPassengers(Number(passengers) < 1 ? "1" : passengers);
     if (origin.trim().length > 0 && destination.trim().length > 0 && date.isValid()) {
       props.onFlightsSubmit(origin, destination, date.format("YYYY-MM-DD").toString(), passengers);
     }
@@ -120,11 +121,11 @@ const FlightsInput: React.FC<CityInputProps> = (props) => {
             <label className="ha-screen-reader">Passengers</label>
             
             <input type="number"
-              value={Number(passengers) < 1 ? 1 : passengers}
+              value={Number(passengers) < 0 ? 1 : passengers}
               onChange={(event) => setPassengers(event.target.value)}
               placeholder="Childrens, adults or infants"
-              className="field__input"
-              defaultValue={1} />
+              className="field__input" 
+              pattern='/^\d+$/' />
             
             <span className="field__label-wrap" aria-hidden="true">
               <span className="field__label">Passengers</span>

@@ -5,16 +5,32 @@ import star from "../../images/star.png";
 import { NavLink } from "react-router-dom";
 
 interface FlightProps {
-    flight: Flight
+    flight: Flight,
+    details: FlightDetailsProps
 }
 
-const FlightItem: React.FC<FlightProps> = ({flight}) =>{
+export interface FlightDetailsProps {
+    id: string,
+    legs: {
+        origin: string,
+        destination: string,
+        date: string
+    }
+}
+
+const FlightItem: React.FC<FlightProps> = ({flight, details}) =>{
+
+    // const details: FlightDetailsProps = {id: flight.legs[0].id, legs: {
+    //         origin: flight.legs[0].origin.display_code, 
+    //         destination: flight.legs[0].destination.display_code,
+    //         date: flight.legs[0].departure.split("T")[0]
+    // }}
 
     return(
         <div className="p-3">
             <CardWrapper className="m-auto">
-                <NavLink to="/flightDetails" state={flight} className={"nav-link"}>
-                    <CardTop>
+                <NavLink to='/flightDetails' state={details} className={"nav-link"}>
+                    <CardTop className="CardTopCustomFlightSearch">
                         {(
                             <>
                             <Setup className="mb-0">
@@ -22,17 +38,15 @@ const FlightItem: React.FC<FlightProps> = ({flight}) =>{
                                 <br />
                                 <b>{Math.floor(flight.totalDuration / 60)} <span>heures</span> {flight.totalDuration % 60} <span>minutes</span></b>
                             </Setup>
-                            <Delivery className="mb-0">
-                                <div className="d-flex justify-content-center align-items-center">
+                            <Delivery className="mb-0 d-flex justify-content-center align-items-center">
                                     <span className="scoreSize">{flight.score.toFixed(1)}</span>
                                     <img className="imageFlightItem" src={star} alt="starImg" />
-                                </div>
                             </Delivery>
                             </>
                         )
                     }
                     </CardTop>
-                    <CardBottomSecond>
+                    <CardBottomSecond className="CardBottomCustomFlightSearch">
                         <p className="mb-0">Le prix de ce vol est de : <br /><b>{flight.price.amount}€</b></p>
                     </CardBottomSecond>
                 </NavLink>
