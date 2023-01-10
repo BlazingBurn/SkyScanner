@@ -9,9 +9,9 @@ interface FlightDetailsProps {
 const FlightItemDetails: React.FC<FlightDetailsProps> = ({flightDetails}) =>{
    
     const addToFav = () => {
-        // let fav: any = JSON.parse(localStorage.getItem("fav"));
-        // fav[state.details.id] = this.state.details.legs;
-        // localStorage.setItem("fav", JSON.stringify(fav));
+        let fav: any = JSON.parse(localStorage.getItem("fav") || "[]");
+        fav[flightDetails.legs[0].id] = flightDetails.legs;
+        localStorage.setItem("fav", JSON.stringify(fav));
     }
 
     return(

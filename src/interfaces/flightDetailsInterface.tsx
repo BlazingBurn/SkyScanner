@@ -5,6 +5,7 @@ export interface FlightDetailsInterface {
 }
 
 interface Legs {
+    id: string;
     origin: Origin;
     destination: Destination;
     departure: string;
