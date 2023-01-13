@@ -1,6 +1,7 @@
 import { FlightDetailsInterface } from "../../interfaces/flightDetailsInterface";
 
 import star from "../../images/star.png";
+import { useEffect, useState } from "react";
 
 interface FlightDetailsProps {
     flightDetails: FlightDetailsInterface
@@ -8,71 +9,109 @@ interface FlightDetailsProps {
 
 const FlightItemDetails: React.FC<FlightDetailsProps> = ({flightDetails}) =>{
    
+    const [localArray, setLocalArray] = useState<FlightDetailsInterface[]>([]);
+    const [isFav, setIsFav] = useState<boolean>(false)
+
+    useEffect(()=>{
+        const flightDetailsStorage = localStorage.getItem('fav');
+        if(flightDetailsStorage){
+            setLocalArray(JSON.parse(flightDetailsStorage) as FlightDetailsInterface[]);
+        }
+    },[]);
+
     const addToFav = () => {
-        let fav: any = JSON.parse(localStorage.getItem("fav") || "[]");
-        fav[flightDetails.legs[0].id] = flightDetails.legs;
-        localStorage.setItem("fav", JSON.stringify(fav));
+        const newArray = [...localArray, flightDetails];
+        setLocalArray(newArray);
+        localStorage.setItem('fav', JSON.stringify(newArray));
+        setIsFav(true);
+    }
+
+    const removeToFav = () => {
+        const newArray = localArray.filter((value:FlightDetailsInterface)  => value !== flightDetails);
+        setLocalArray(newArray);
+        localStorage.setItem('fav', JSON.stringify(newArray));
+        setIsFav(false);
     }
 
     return(
         <div className="p-3">
             
             <div>
-                <h2>
+                <h2 className="titleFlightDetails">
                     Détails du vol
                 </h2>
-                <p className="addToFav"><button className="btn-details" onClick={addToFav}>Ajouter aux favoris</button></p>
+                <p className="addToFav">
+                    {
+                        isFav &&
+                        <button className="btn-details btn-details-color-fav" onClick={removeToFav}>
+                        <span className="spanAddFav">Supprimer des favoris ce vol</span>
+                        <img className="imageFavsDetails" src={star} alt="starImage" />
+                        </button>
+                    }
+                    {
+                        !isFav && 
+                        <button className="btn-details btn-details-color-not-fav" onClick={addToFav}>
+                        <span className="spanAddFav">Ajouter aux favoris ce vol</span>
+                        <img className="imageFavsDetails" src={star} alt="starImage" />
+                        </button>
+                    }
+                </p>
                 <div>
                     {flightDetails.pricingOptions.map((result: any) => (
                         <div key={result.id} className="card">
-                           <p>Prix: {result.totalPrice} €</p>
-                            <p>Nom: {result.agents[0].name}</p>
-                            {result.agents[0].segments.map((segment: any) => (
-                                <div key={segment.id}>
-                                    <p>Numéro du vol: {segment.flightNumber}</p>
-                                    <p>De: {segment.origin.name} - {segment.origin.displayCode} - {segment.origin.city}</p>
-                                    <p>Départ le: {new Date(segment.departure).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</p>
-                                    <p>À: {segment.destination.name} - {segment.destination.displayCode} - {segment.destination.city}</p>
-                                    <p>Arrivé le: {new Date(segment.arrival).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</p>
-                                    <p>Durée du vol: {Math.floor(segment.duration / 60)} heures {Math.floor(segment.duration % 60)} minutes</p>
-                                </div>
-                            ))}
-                            <p>Note: {result.agents[0].rating.value.toFixed(1)}/5 ({result.agents[0].rating.count} votes)</p>
-                            <p>URL: <a href={result.agents[0].url} target="_blank" rel="noreferrer">lien</a></p>
+                            <p className="AgenceNameP"> <span>Nom de l'agence</span><br /><span className="AgenceNameSpan">{result.agents[0].name}</span></p>
+
+                            <div className="divInformationFlight">
+                                <span className="InformationFlight">Informations concernant ce vol</span>
+                                {result.agents[0].segments.map((segment: any) => (
+                                    <div key={segment.id} className='InformationFlightDetails'>
+                                        <p className="pInformationFlightNumber">Numéro de vol : <span className="InformationFlightNumber">{segment.flightNumber}</span></p>
+
+                                        <div className="flexInformationFlight">
+                                            <div className="flexInformationFlightInside">
+                                                <p>Départ de l'aéroport <span className="fw-bold">{segment.origin.name}</span>
+                                                 <br /> 
+                                                 depuis la ville de <span className="fw-bold">{segment.origin.city}</span>
+                                                 <br />
+                                                 (son code de recherche <span className="fw-bold">{segment.origin.displayCode})</span>
+                                                </p>
+                                                <p>Prévu à <br /> <span className="fw-bold">{new Date(segment.departure).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</span></p>
+                                            </div>
+                                            
+                                            <div className="flexInformationFlightInside">
+                                                <p>Arriver à l'aéroport <span className="fw-bold">{segment.destination.name}</span>
+                                                 <br /> 
+                                                 de la ville de <span className="fw-bold">{segment.destination.city}</span>
+                                                 <br />
+                                                 (son code de recherche <span className="fw-bold">{segment.destination.displayCode})</span>
+                                                </p>
+                                                <p>Prévu pour <br /> <span className="fw-bold">{new Date(segment.arrival).toISOString().replace(/T/, ' ').replace(/\..+/, '')}</span></p>
+                                            </div>
+                                        </div>
+
+                                        <p>Pour une durée de vol estimé à <span className="fw-bold">{Math.floor(segment.duration / 60)} heures {Math.floor(segment.duration % 60)} minutes</span></p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="LastInformationFlight">
+                                <p>Prix demandé 
+                                    <br /> 
+                                    <span className="fw-bold">{result.totalPrice} €</span>
+                                </p>
+                                <p>Cette agence possede une note de 
+                                    <br /> 
+                                    <span className="fw-bold">{result.agents[0].rating.value.toFixed(1)}/5 ({result.agents[0].rating.count} votes)</span>
+                                </p>
+                                <p>Voici son URL pour plus d'information 
+                                    <br /> 
+                                   <a href={result.agents[0].url} target="_blank" rel="noreferrer">lien</a>
+                                </p>
+                            </div>
                         </div>
                     ))}
                 </div>
             </div>
-
-            {/* <CardWrapper className="m-auto">
-                <CardTop>
-                    {(
-                        <>
-                        <Setup className="mb-0">
-                            <span className="infoDurationFlight">Origine du vol : </span>
-                            <br />
-                            <b><span>{flightDetails.legs[0].origin.name} à {flightDetails.legs[0].origin.city}</span></b>
-                            <span className="infoDurationFlight">En direction de : </span>
-                            <br />
-                            <b><span>{flightDetails.legs[0].destination.name} à {flightDetails.legs[0].destination.city}</span></b>
-                        </Setup>
-                        <Delivery className="mb-0">
-                            <span className="infoDurationFlight">Départ prévue le : </span>
-                            <br />
-                            <b><span>{flightDetails.legs[0].departure} pour {Math.floor(flightDetails.legs[0].duration / 60)} <span>heures</span> {flightDetails.legs[0].duration % 60} <span>minutes</span></span></b>
-                            <div className="d-flex justify-content-center align-items-center">
-                                <span className="scoreSize">{flightDetails.pricingOptions[0].agents[0].rating.value.toFixed(1)}</span>
-                                <img className="imageFlightItem" src={star} alt="starImg" />
-                            </div>
-                        </Delivery>
-                        </>
-                    )
-                }
-                </CardTop>
-                <CardBottomSecond>
-                    <p className="mb-0">Le prix de ce vol est de : <br /><b>{flight.price.amount}€</b></p>
-                </CardBottomSecond>
-            </CardWrapper> */}
         </div>
     )
   }

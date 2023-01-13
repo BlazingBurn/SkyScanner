@@ -8,7 +8,6 @@ const Menu = () => {
     return ( 
        <div className="colorMenu">
             <nav className="navbar navbar-expand navbar-light container">
-                {/* <span className="navbar-brand">Menu</span> */}
                 
                 <ul className="navbar-nav">
                     <li className="nav-item">

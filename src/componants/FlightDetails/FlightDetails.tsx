@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import '../css/flightsDetails.scss';
 
 import axios from 'axios';
-import { Flight } from '../../interfaces/flightInterface';
 import { FlightDetailsInterface } from '../../interfaces/flightDetailsInterface';
 import FlightItemDetails from './FlightItemDetails';
 import { FlightDetailsProps } from '../SearchFlights/FlightItem';
@@ -70,15 +69,15 @@ const FlightDetails: React.FC = () => {
     }, [flight]);
       
   return (
-      <div> {/*className='searchirportBackGround'>*/}
-          <div className='searchFlightsSize'>
+      <div className={show ? "searchirportBackGround" : "fw-bold"}>
+          <div className='FlightDetailsSize'>
 
               <div className='p-3'>
                   {
                   error && <p>{`${message}`}</p>
                   }
                   {
-                    !error && !show && <div>loading...</div>
+                    !error && !show && <div className='fw-bold'>loading...</div>
                   }
                   { 
                       !error && show &&

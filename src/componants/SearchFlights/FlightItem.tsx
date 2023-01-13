@@ -20,12 +20,6 @@ export interface FlightDetailsProps {
 
 const FlightItem: React.FC<FlightProps> = ({flight, details}) =>{
 
-    // const details: FlightDetailsProps = {id: flight.legs[0].id, legs: {
-    //         origin: flight.legs[0].origin.display_code, 
-    //         destination: flight.legs[0].destination.display_code,
-    //         date: flight.legs[0].departure.split("T")[0]
-    // }}
-
     return(
         <div className="p-3">
             <CardWrapper className="m-auto">

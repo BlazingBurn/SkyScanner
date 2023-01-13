@@ -7,6 +7,7 @@ import Menu from './componants/Menu';
 import { Route, Routes } from 'react-router-dom';
 import SearchFlights from './componants/SearchFlights/SearchFlights';
 import FlightDetails from './componants/FlightDetails/FlightDetails';
+import Favs from './componants/Favs/Favs';
 
 const App: React.FC = () => {
 
@@ -25,7 +26,7 @@ const App: React.FC = () => {
           <Route path='/' element={<SearchAirport />} />
           <Route path="/searchFlights" element={<SearchFlights />} />
           <Route path="/flightDetails" element={<FlightDetails />} />
-          {/* <Route path="/Favs" element={<Favs />} /> */}
+          <Route path="/Favs" element={<Favs />} />
         </Routes>
       </div>
 

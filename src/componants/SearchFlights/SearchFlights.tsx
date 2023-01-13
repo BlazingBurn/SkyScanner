@@ -11,6 +11,7 @@ const SearchFlights: React.FC = () => {
     const [error, setError] = useState<boolean>(false)
     const [message, setMessage] = useState<string>("")
     const [legsInfo, setLegsInfo] = useState<LegsRename>({origin: "", destination: "", date:""})
+    const [loading, setLoading] = useState<boolean>(false)
 
     const handleFlightsSubmit = (origin: string, destination: string, date: string, passengers: string) => {
       
@@ -20,6 +21,7 @@ const SearchFlights: React.FC = () => {
           console.log("origin : " + origin + ", destination : " + destination + ", date : " + date + "et passengers : " + passengers);
 
           setLegsInfo({origin: origin, destination: destination, date: date});
+          setLoading(true);
 
           const options = {
               method: 'GET',
@@ -42,6 +44,7 @@ const SearchFlights: React.FC = () => {
               if (!response.data.status) {
                   console.log("Erreur : status false");
                   setError(true);
+                  setLoading(false);
                   setMessage(response.data.message);
                   return;
               }
@@ -49,16 +52,14 @@ const SearchFlights: React.FC = () => {
                 console.log(response.data);
                 setError(false);
 
-                // response.data.data.map((f: Flight) => 
-                //   f.legs.map(l => transformObject(l))
-                // );
-
                 setFlights(response.data.data);
+                setLoading(false);
 
             }).catch(function (error) {
               console.error(error);
               setError(true);
               setMessage(error);
+              setLoading(false);
               setFlights([]);
             });
 
@@ -78,8 +79,11 @@ const SearchFlights: React.FC = () => {
                     {
                     error && <p>{`${message}`}</p>
                     }
+                    {
+                        loading && <div>loading...</div>
+                    }
                     { 
-                        flights.length > 0 &&
+                        flights.length > 0 && !loading &&
                         flights.sort((a, b) => a.price.amount - b.price.amount).map(e => 
                           <FlightItem key={e.id} flight={e} details={{id: e.legs[0].id, legs: legsInfo}}/>)
                     }

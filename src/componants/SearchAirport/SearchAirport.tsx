@@ -11,6 +11,7 @@ const SearchAirport: React.FC = () => {
     const [error, setError] = useState<boolean>(false)
     const [message, setMessage] = useState<string>("")
     const [city, setCity] = useState<string>("")
+    const [loading, setLoading] = useState<boolean>(false)
 
     const handleCitySubmit = (city: string) => {
         
@@ -19,6 +20,7 @@ const SearchAirport: React.FC = () => {
             setAirports([]);
             console.log(city);
             setCity(city);
+            setLoading(true);
 
             const options = {
                 method: 'GET',
@@ -36,17 +38,20 @@ const SearchAirport: React.FC = () => {
                     console.log("Erreur : status false");
                     setError(true);
                     setMessage(response.data.message[0].query);
+                    setLoading(false);
                     return;
                 }
 
                 console.log(response.data);
                 setError(false);
                 setAirports(response.data.data);
+                setLoading(false);
 
             }).catch(function (error) {
                 console.error(error);
                 setError(true);
                 setMessage(error);
+                setLoading(false);
                 setAirports([]);
             });
 
@@ -67,15 +72,18 @@ const SearchAirport: React.FC = () => {
                     error && <p>{`${message}`}</p>
                     }
                     {
-                        airports.length === 0 && city &&
+                        airports.length === 0 && city && !loading &&
                         <h2>Aucun Aéroport trouvé pour : <b>{city}</b> </h2>
+                    } 
+                    {
+                        loading && <div>loading...</div>
                     }
                     {
-                        airports.length > 0 &&
+                        airports.length > 0 && !loading &&
                         <h2>Aéroport comportant <b>{city}</b> dans son nom :</h2>
                     }
                     { 
-                        airports.length > 0 &&
+                        airports.length > 0 && !loading &&
                         airports.map(e => <AirportItem key={e.CityId + e.GeoId} airport={e}/>)
                     }
                 </div>

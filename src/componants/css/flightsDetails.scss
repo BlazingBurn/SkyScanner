@@ -1,30 +1,107 @@
+.titleFlightDetails {
+  text-align: center;
+}
+
+.FlightDetailsSize {
+  width: 60%;
+  margin: auto;
+  border-radius: 2%;
+}
+
 .addToFav {
-  width: 10%;
+  width: 40%;
   align-content: center;
   margin: auto;
 }
 
+.spanAddFav {
+  align-self: center;
+}
+
+.imageFavsDetails {
+  width: 30px;
+  height: 30px;
+  align-self: center;
+}
+
+.btn-details-color-fav {
+ background-color: #af4c4c; 
+}
+
+.btn-details-color-not-fav {
+  background-color: #4caf50;
+}
+
 .btn-details {
-  margin-top: 20px;
+  margin-top: 15px;
   width: 100%;
   padding: 10px;
-  background-color: #4caf50;
   color: white;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
-  border: none;
   border-radius: 4px;
-  cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 300px;
   margin: 1% auto;
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 20px;
 }
 
+.AgenceNameP {
+  font-size: 25px;
+  text-align: center;
+}
+
+.AgenceNameSpan {
+  color: red;
+  font-weight: bold;
+}
+
+.InformationFlight {
+  font-size: 22px;
+  text-align: center;
+}
+
+.pInformationFlightNumber {
+  margin: 5px;
+}
+
+.divInformationFlight {
+  text-align: center;
+  background-color: aliceblue;
+}
+
+.InformationFlightDetails {
+  font-size: 18px;
+  margin-left: 22px;
+  margin-right: 22px;
+  background-color: beige;
+  color: darkred;
+}
+
+.InformationFlightNumber {
+  color: red;
+  font-weight: bold;
+}
+
+.flexInformationFlight {
+  display: inline-flex;
+  border: 1px solid chocolate;
+}
+
+.flexInformationFlightInside {
+  margin: 10px;
+}
+
+.LastInformationFlight {
+  display: flex;
+  justify-content: space-around;
+  font-size: 20px;
+  text-align: center;
+}
